@@ -1,0 +1,16 @@
+cherrypy>=3.0.0
+dnspython
+dogpile.cache
+functional
+graphitesend
+Jinja2
+netaddr
+numpy
+pysnmp
+PyYAML
+redis
+requests
+setproctitle
+subprocess32
+suds
+Yapsy>=1.10.423
