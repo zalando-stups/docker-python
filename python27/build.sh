@@ -15,4 +15,4 @@ if [ -z "$SQUASH_PATH" ]; then
 fi
 
 echo 'Squashing the base image to save space..'
-docker save zalando/python:$VER | sudo docker-squash -from root -t zalando/python:$VER | docker load
+docker save zalando/python:$VER | sudo docker-squash -t zalando/python:$VER | docker load
