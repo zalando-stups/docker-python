@@ -14,5 +14,6 @@ if [ -z "$SQUASH_PATH" ]; then
     rm $TGZ
 fi
 
-echo 'Squashing the base image to save space..'
-docker save zalando/python:$VER | sudo docker-squash -from root -t zalando/python:$VER | docker load
+# NOTE: disable docker-squash as it now breaks the layer tar format (reason unknown)
+#echo 'Squashing the base image to save space..'
+#docker save zalando/python:$VER | sudo docker-squash -t zalando/python:$VER | docker load
