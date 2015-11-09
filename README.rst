@@ -2,8 +2,9 @@
 Zalando Docker Python Image
 ===========================
 
-This Docker base image contains Python (2.7 or 3.4) and the Zalando CA certificate.
-Versions of this image will be immutable, i.e. there is no "latest" tag, but instead version numbers are incremented like::
+This Docker base image contains Python (2.7, 3.4, or 3.5) and the Zalando CA certificate.
+Versions of this image will be immutable, i.e. there is no "latest" tag, but instead version numbers are incremented
+like::
 
     <PYTHON_VERSION>-<COUNTER> (example: "3.4.0-2")
 
