@@ -2,7 +2,7 @@
 
 VER=$(cat VERSION)
 
-docker build --no-cache=true -t zalando/ubuntu:$VER .
+docker build --no-cache=true -t zalando/python:$VER .
 
 SQUASH_PATH=$(which docker-squash)
 SQUASH_VERSION="0.2.0"
@@ -17,4 +17,4 @@ if [ -z "$SQUASH_PATH" ]; then
 fi
 
 echo 'Squashing the base image to save space..'
-docker save zalando/ubuntu:$VER | sudo "$SQUASH_PATH" -verbose -from root -t zalando/ubuntu:$VER | docker load
+docker save zalando/python:$VER | sudo "$SQUASH_PATH" -verbose -from root -t zalando/python:$VER | docker load
