@@ -2,18 +2,19 @@
 
 VER=$(cat VERSION)
 
-docker build -t zalando/python:$VER .
+docker build --no-cache=true -t zalando/ubuntu:$VER .
 
 SQUASH_PATH=$(which docker-squash)
+SQUASH_VERSION="0.2.0"
 
 if [ -z "$SQUASH_PATH" ]; then
     # install Docker Squash from https://github.com/jwilder/docker-squash
-    TGZ=docker-squash-linux-amd64-v0.1.0.tar.gz
-    wget https://github.com/jwilder/docker-squash/releases/download/v0.1.0/$TGZ
+    TGZ=docker-squash-linux-amd64-v${SQUASH_VERSION}.tar.gz
+    wget https://github.com/jwilder/docker-squash/releases/download/v${SQUASH_VERSION}/$TGZ
     sudo tar -C /usr/local/bin -xzvf $TGZ
     rm $TGZ
+    SQUASH_PATH=$(which docker-squash)
 fi
 
-# NOTE: disable docker-squash as it now breaks the layer tar format (reason unknown)
-#echo 'Squashing the base image to save space..'
-#docker save zalando/python:$VER | sudo docker-squash -t zalando/python:$VER | docker load
+echo 'Squashing the base image to save space..'
+docker save zalando/ubuntu:$VER | sudo "$SQUASH_PATH" -verbose -from root -t zalando/ubuntu:$VER | docker load
