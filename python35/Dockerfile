@@ -1,9 +1,9 @@
-FROM zalando/ubuntu:15.10-2
+FROM zalando/ubuntu:15.10-3
 MAINTAINER Henning Jacobs <henning.jacobs@zalando.de>
 
 # Install python3.5
 RUN apt-get update \
-    && apt-get install -q -y python3.5 python3.5-dev python3-pip \
+    && apt-get install -q -y --no-install-recommends python3.5 python3.5-dev python3-pip gcc \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 # set python 3.5 as the default python version
@@ -15,3 +15,5 @@ RUN pip3 install --upgrade pip requests
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
 CMD python3
+
+RUN purge.sh
