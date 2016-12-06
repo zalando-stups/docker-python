@@ -8,11 +8,11 @@ like::
 
     <PYTHON_VERSION>-<COUNTER> (example: "3.5.0-2")
 
-Build the Docker image and squash it with a single command:
+Build the Docker image:
 
 .. code-block::
 
-    $ ./build.sh
+    $ docker build -t stups/python:dev .
 
 You can find the `latest Python Docker image in our open source registry`_.
 
