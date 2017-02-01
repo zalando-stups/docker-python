@@ -1,5 +1,4 @@
-#FROM registry.opensource.zalan.do/stups/ubuntu:UPSTREAM
-FROM registry.opensource.zalan.do/stups/ubuntu:16.04-cd33
+FROM registry.opensource.zalan.do/stups/ubuntu:latest
 MAINTAINER Zalando SE
 
 # Install python3.6
