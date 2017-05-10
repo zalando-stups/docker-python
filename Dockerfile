@@ -1,4 +1,5 @@
-FROM registry.opensource.zalan.do/stups/ubuntu:latest
+# IMPORTANT: please keep the special "UPSTREAM" marker here as it's replaced by our CD pipeline
+FROM registry.opensource.zalan.do/stups/ubuntu:UPSTREAM
 MAINTAINER Zalando SE
 
 # Install python3.6
