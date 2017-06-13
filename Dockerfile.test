@@ -1,4 +1,4 @@
-FROM UNTESTED
+FROM test
 
 COPY test.py /
 
