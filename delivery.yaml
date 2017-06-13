@@ -17,7 +17,7 @@ build_steps:
         out=$(docker run $image-test)
         echo "$out"
         # e.g. "Python Version: CPython 3.6.1"
-        version=$(echo $out | grep 'Python Version:' | awk '{ print $4}')
+        version=$(echo "$out" | grep 'Python Version:' | awk '{ print $4}')
         release=registry-write.opensource.zalan.do/stups/python:$version-${CDP_TARGET_BRANCH_COUNTER}
         docker tag $image $release
         docker push $release
