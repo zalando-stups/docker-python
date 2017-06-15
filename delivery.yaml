@@ -20,4 +20,10 @@ build_steps:
         version=$(echo "$out" | grep 'Python Version:' | awk '{ print $4}')
         release=registry-write.opensource.zalan.do/stups/python:$version-${CDP_TARGET_BRANCH_COUNTER}
         docker tag $image $release
-        docker push $release
+        IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
+        if [[ ${IS_PR_BUILD} != "true" ]]
+        then
+            docker push $release
+        else
+            echo "Image not pushed because the build is not a push to master"
+        fi
