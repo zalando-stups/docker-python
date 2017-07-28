@@ -13,7 +13,7 @@ RUN apt-get update \
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.6 1 \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1 \
     && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
-RUN pip3 install --upgrade pip requests
+RUN pip3 install --upgrade pip requests setuptools
 
 # make requests library use the Debian CA bundle (includes Zalando CA)
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
