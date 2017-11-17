@@ -4,7 +4,7 @@ MAINTAINER Zalando SE
 # Install python3.6
 RUN apt-get update \
     && apt-get install -y --no-install-recommends software-properties-common \
-    && add-apt-repository -y ppa:fkrull/deadsnakes \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
     && apt-get update \
     && apt-get install -q -y --no-install-recommends python3.6 python3.6-dev python3-pip python3-setuptools python3-wheel gcc \
     && apt-get clean \
