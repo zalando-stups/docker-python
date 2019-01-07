@@ -3,7 +3,7 @@ MAINTAINER Zalando SE
 
 # Install python tools and dev packages
 RUN apt-get update \
-    && apt-get install -q -y --no-install-recommends python3.6-dev python3-pip python3-setuptools python3-wheel gcc \
+    && apt-get install -q -y --no-install-recommends python3.7-dev python3-pip python3-setuptools python3-wheel gcc \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
