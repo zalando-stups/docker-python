@@ -1,34 +1,32 @@
 version: "2017-09-20"
 dependencies:
-    - id: base
-      type: docker
-      ref: registry.opensource.zalan.do/stups/ubuntu
+  - id: base_ubuntu
+    type: docker
+    ref: registry.opensource.zalan.do/stups/ubuntu
 pipeline:
   - id: build
     type: script
+    env:
+      IMAGE: registry-write.opensource.zalan.do/stups/python
     commands:
-    - desc: 'Install Docker'
-      cmd: 'curl -sSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh'
-    - desc: 'Build'
+    - desc: Build the docker image
       cmd: |
-        # use the resolved Ubuntu base image version
-        echo "Ubuntu base image version: ${DEP_BASE_VERSION}"
-        sed -i "s,:latest,:${DEP_BASE_VERSION}," Dockerfile
-        image=python-temp:${CDP_BUILD_VERSION}
-        docker build -t $image --squash .
-        sed -i "s,UNTESTED,$image,g" Dockerfile.test
-        docker build -t $image-test -f Dockerfile.test .
-        # get current Python version
-        out=$(docker run $image-test)
-        echo "$out"
-        # e.g. "Python Version: CPython 3.6.1"
-        version=$(echo "$out" | grep 'Python Version:' | awk '{ print $4}')
-        release=registry-write.opensource.zalan.do/stups/python:$version-${CDP_TARGET_BRANCH_COUNTER}
-        docker tag $image $release
-        IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
-        if [[ ${IS_PR_BUILD} != "true" ]]
-        then
-            docker push $release
+        # Use the resolved Ubuntu base image version
+        echo "Ubuntu base image version: ${DEP_BASE_UBUNTU_VERSION}"
+        docker build --squash \
+                     --tag ${IMAGE}:local \
+                     --build-arg UBUNTU_VERSION=${DEP_BASE_UBUNTU_VERSION} \
+                     .
+
+        # Get current Python version
+        PYTHON_VERSION=$(docker run ${IMAGE}:local python -V | awk '{ print $2}')
+        echo "Successfully built docker image with Python version: ${PYTHON_VERSION}"
+
+        # Tag and push the image (but only if it is a master branch)
+        if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
+          TAG=${PYTHON_VERSION}-${CDP_TARGET_BRANCH_COUNTER}
+          docker tag ${IMAGE}:local ${IMAGE}:${TAG}
+          docker push ${IMAGE}:${TAG}
         else
-            echo "Image not pushed because the build is not a push to master"
+          echo "Image not pushed because the build is not a push to master"
         fi
